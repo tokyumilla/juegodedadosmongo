@@ -4,7 +4,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 
 public class PlayerDTO {
-    private Integer id;
+    private String id;
     private String name;
     private Instant registerDate;
 
@@ -17,7 +17,7 @@ public class PlayerDTO {
         this.winningRate = setWinningRate();
     }
 
-    public PlayerDTO(Integer id, String name, Instant registerDate, ArrayList<RollDTO> rolls) {
+    public PlayerDTO(String id, String name, Instant registerDate, ArrayList<RollDTO> rolls) {
         this.id = id;
         this.name = name;
         this.registerDate = registerDate;
@@ -40,11 +40,11 @@ public class PlayerDTO {
         return winningRate;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

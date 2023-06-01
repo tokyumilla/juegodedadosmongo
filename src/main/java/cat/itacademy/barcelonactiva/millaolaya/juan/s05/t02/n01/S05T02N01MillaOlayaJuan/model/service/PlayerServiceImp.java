@@ -5,9 +5,6 @@ import cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOl
 import cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.entity.Player;
 import cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.entity.Roll;
 import cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.repository.PlayerRepository;
-import cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.repository.RollRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,15 +17,14 @@ import java.util.stream.Collectors;
 @Service
 public class PlayerServiceImp implements PlayerService {
 
-    private final PlayerRepository playerRepository ;
+    private final PlayerRepository playerRepository;
 
-    private final RollRepository rollRepository;
+
     private final PlayerConverter playerConverter;
     private final RollConverter rollConverter;
 
-    public PlayerServiceImp(PlayerRepository playerRepository, RollRepository rollRepository, PlayerConverter playerConverter, RollConverter rollConverter) {
+    public PlayerServiceImp(PlayerRepository playerRepository, PlayerConverter playerConverter, RollConverter rollConverter) {
         this.playerRepository = playerRepository;
-        this.rollRepository = rollRepository;
         this.playerConverter = playerConverter;
         this.rollConverter = rollConverter;
     }
@@ -63,20 +59,16 @@ public class PlayerServiceImp implements PlayerService {
         }
     }
 
-    @Override
-    public Optional<RollDTO> findRollById(Integer id) {
-        Optional<Roll> roll = rollRepository.findById(id);
-        if (roll.isPresent()) return Optional.of(rollConverter.fromEntity(roll.get()));
-        else return Optional.empty();
-    }
 
     @Override
     public void deleteRolls(Integer id) {
-        Optional<Player> player = playerRepository.findById(id);
-        if (player.isPresent() && player.get().getRolls() != null) {
-            List<Roll> rolls = player.get().getRolls();
-            rollRepository.deleteAll(rolls);
-        }
+        playerRepository.findById(id).stream().findAny().map(player -> {
+            player.setRolls(new ArrayList<>());
+            playerRepository.save(player);
+            return player;
+        });
+
+
     }
     //probar si no deja datos incoherentes
 
@@ -94,8 +86,7 @@ public class PlayerServiceImp implements PlayerService {
         playerDTO.setWinningRate();
         Roll roll = rollConverter.fromDto(rollDTO);
         Player player = playerConverter.fromDto(playerDTO);
-        roll.setPlayer(player);
-        rollRepository.save(roll);
+        playerRepository.save(player);
     }
 
 
@@ -106,11 +97,6 @@ public class PlayerServiceImp implements PlayerService {
     }
 
 
-    @Override
-    public RollDTO saveRoll(RollDTO rollDTO) {
-        rollRepository.save(rollConverter.fromDto(rollDTO));
-        return rollDTO;
-    }
 
     public boolean checkName(String name) {
         Optional<Player> player = playerRepository.findByName(name);
@@ -122,10 +108,10 @@ public class PlayerServiceImp implements PlayerService {
     public float calculateWinningRate() {
         float totalRates = 0;
         List<PlayerDTO> players = playerConverter.fromEntity(playerRepository.findAll());
-        for (PlayerDTO p: players) {
+        for (PlayerDTO p : players) {
             totalRates += p.getWinningRate();
         }
-        return totalRates/players.size();
+        return totalRates / players.size();
     }
 
     @Override

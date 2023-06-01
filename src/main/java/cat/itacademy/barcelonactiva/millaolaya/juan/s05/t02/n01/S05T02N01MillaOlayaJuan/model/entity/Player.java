@@ -1,44 +1,41 @@
 package cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.entity;
 
-import jakarta.persistence.*;
+
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.Instant;
 import java.util.List;
 
-@Entity
-@EntityListeners(AuditingEntityListener.class)
-@Table (name="Players")
+
+@Document ("Players")
 public class Player {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private String id;
 
-    @Column(name = "name", unique = true)
     private String name;
 
-
-    @Column(name= "registerDate")
     @CreatedDate
     private Instant registerDate;
 
-    @OneToMany (mappedBy = "player")
+
     private List<Roll> rolls;
 
     public Player (){}
 
-    public Player(Integer id, String name, List<Roll> rolls) {
+    public Player(String id, String name, List<Roll> rolls) {
         this.id = id;
         this.name = name;
         this.rolls = rolls;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
