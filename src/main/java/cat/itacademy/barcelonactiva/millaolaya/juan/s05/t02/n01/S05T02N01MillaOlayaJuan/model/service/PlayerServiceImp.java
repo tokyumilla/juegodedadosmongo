@@ -5,6 +5,7 @@ import cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOl
 import cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.entity.Player;
 import cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.entity.Roll;
 import cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.repository.PlayerRepository;
+import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,19 +38,19 @@ public class PlayerServiceImp implements PlayerService {
     }
 
     @Override
-    public Optional<PlayerDTO> findPlayerById(Integer id) {
+    public Optional<PlayerDTO> findPlayerById(ObjectId id) {
         Optional<Player> player = playerRepository.findById(id);
         if (player.isPresent()) return Optional.of(playerConverter.fromEntity(player.get()));
         else return Optional.empty();
     }
 
     @Override
-    public void deletePlayerById(Integer id) {
+    public void deletePlayerById(ObjectId id) {
         playerRepository.deleteById(id);
     }
 
     @Override
-    public List<RollDTO> findAllRolls(int id) {
+    public List<RollDTO> findAllRolls(ObjectId id) {
         Optional<Player> playerData = playerRepository.findById(id);
 
         if (playerData.isPresent()) {
@@ -61,7 +62,7 @@ public class PlayerServiceImp implements PlayerService {
 
 
     @Override
-    public void deleteRolls(Integer id) {
+    public void deleteRolls(ObjectId id) {
         playerRepository.findById(id).stream().findAny().map(player -> {
             player.setRolls(new ArrayList<>());
             playerRepository.save(player);

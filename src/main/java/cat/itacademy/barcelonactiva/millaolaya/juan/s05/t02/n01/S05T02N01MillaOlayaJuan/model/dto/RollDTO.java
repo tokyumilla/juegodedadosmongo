@@ -1,7 +1,6 @@
 package cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.dto;
 
 public class RollDTO {
-    private Integer id;
     private Integer firstRoll;
     private Integer secondRoll;
 
@@ -9,12 +8,6 @@ public class RollDTO {
 
     public RollDTO(){}
 
-    public RollDTO(Integer id, Integer firstRoll, Integer secondRoll) {
-        this.id = id;
-        this.firstRoll = firstRoll;
-        this.secondRoll = secondRoll;
-        setWin();
-    }
 
     public RollDTO(Integer firstRoll, Integer secondRoll) {
         this.firstRoll = firstRoll;
@@ -30,13 +23,7 @@ public class RollDTO {
         }
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getFirstRoll() {
         return firstRoll;
@@ -62,7 +49,6 @@ public class RollDTO {
     @Override
     public String toString() {
         return "RollDTO{" +
-                "id=" + id +
                 ", firstRoll=" + firstRoll +
                 ", secondRoll=" + secondRoll +
 //                ", player=" + player +

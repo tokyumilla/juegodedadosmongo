@@ -12,9 +12,6 @@ public class RollConverter extends AbstractConverter<Roll, RollDTO> {
     @Override
     public Roll fromDto(RollDTO dto) {
         Roll roll = new Roll();
-        if (dto.getId() != null) {
-            roll.setId((dto.getId()));
-        }
         roll.setFirstRoll(dto.getFirstRoll());
         roll.setSecondRoll(dto.getSecondRoll());
         roll.setWin(dto.isWin());
@@ -24,6 +21,6 @@ public class RollConverter extends AbstractConverter<Roll, RollDTO> {
 
     @Override
     public RollDTO fromEntity(Roll entity) {
-        return new RollDTO(entity.getId(), entity.getFirstRoll(), entity.getSecondRoll());
+        return new RollDTO(entity.getFirstRoll(), entity.getSecondRoll());
     }
 }

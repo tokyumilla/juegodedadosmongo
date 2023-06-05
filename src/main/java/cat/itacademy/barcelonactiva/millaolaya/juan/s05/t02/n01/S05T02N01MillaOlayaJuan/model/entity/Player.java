@@ -1,6 +1,7 @@
 package cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.entity;
 
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.CreatedDate;
 
 import org.springframework.data.annotation.Id;
@@ -13,7 +14,7 @@ import java.util.List;
 @Document ("Players")
 public class Player {
     @Id
-    private String id;
+    private ObjectId id;
 
     private String name;
 
@@ -25,17 +26,17 @@ public class Player {
 
     public Player (){}
 
-    public Player(String id, String name, List<Roll> rolls) {
+    public Player(ObjectId id, String name, List<Roll> rolls) {
         this.id = id;
         this.name = name;
         this.rolls = rolls;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 

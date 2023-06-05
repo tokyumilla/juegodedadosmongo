@@ -1,10 +1,12 @@
 package cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.dto;
 
+import org.bson.types.ObjectId;
+
 import java.time.Instant;
 import java.util.ArrayList;
 
 public class PlayerDTO {
-    private String id;
+    private ObjectId id;
     private String name;
     private Instant registerDate;
 
@@ -17,7 +19,7 @@ public class PlayerDTO {
         this.winningRate = setWinningRate();
     }
 
-    public PlayerDTO(String id, String name, Instant registerDate, ArrayList<RollDTO> rolls) {
+    public PlayerDTO(ObjectId id, String name, Instant registerDate, ArrayList<RollDTO> rolls) {
         this.id = id;
         this.name = name;
         this.registerDate = registerDate;
@@ -40,11 +42,11 @@ public class PlayerDTO {
         return winningRate;
     }
 
-    public String getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 

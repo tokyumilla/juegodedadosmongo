@@ -4,14 +4,12 @@ package cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaO
 import cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.dto.PlayerDTO;
 import cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.dto.RollDTO;
 import cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaOlayaJuan.model.service.PlayerService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,7 +38,7 @@ public class PlayerRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PlayerDTO> updatePlayer(@PathVariable("id") int id, @RequestBody String playerName) {
+    public ResponseEntity<PlayerDTO> updatePlayer(@PathVariable("id") ObjectId id, @RequestBody String playerName) {
         Optional<PlayerDTO> playerData = playerService.findPlayerById(id);
 
 
@@ -59,8 +57,8 @@ public class PlayerRestController {
     }
 
     @PostMapping("/{id}/games/")
-    public ResponseEntity<PlayerDTO> addRoll(@PathVariable("id") int id) {
-        Optional<PlayerDTO> playerData = playerService.findPlayerById(id);
+    public ResponseEntity<PlayerDTO> addRoll(@PathVariable("id") String id) {
+        Optional<PlayerDTO> playerData = playerService.findPlayerById(new ObjectId(id));
 
         if (playerData.isPresent()) {
             PlayerDTO _player = playerData.get();
@@ -72,9 +70,9 @@ public class PlayerRestController {
     }
 
     @DeleteMapping("/{id}/games")
-    public ResponseEntity<HttpStatus> deleteRolls(@PathVariable("id") int id) {
+    public ResponseEntity<HttpStatus> deleteRolls(@PathVariable("id") String id) {
         try {
-            playerService.deleteRolls(id);
+            playerService.deleteRolls(new ObjectId(id));
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -96,9 +94,9 @@ public class PlayerRestController {
     }
 
     @GetMapping("/{id}/games")
-    public ResponseEntity<List<RollDTO>> getAllRolls(@PathVariable("id") int id) {
+    public ResponseEntity<List<RollDTO>> getAllRolls(@PathVariable("id") String id) {
         try {
-            List<RollDTO> rolls = playerService.findAllRolls(id);
+            List<RollDTO> rolls = playerService.findAllRolls(new ObjectId(id));
             if (rolls != null) return new ResponseEntity<>(rolls, HttpStatus.OK);
             else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {

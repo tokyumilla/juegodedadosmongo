@@ -7,7 +7,7 @@ package cat.itacademy.barcelonactiva.millaolaya.juan.s05.t02.n01.S05T02N01MillaO
 public class Roll {
 
 
-    private Integer id;
+
 
 
     private Integer firstRoll;
@@ -20,21 +20,15 @@ public class Roll {
 
     public Roll(){}
 
-    public Roll(Integer id, Integer firstRoll, Integer secondRoll, boolean win) {
-        this.id = id;
+    public Roll(Integer firstRoll, Integer secondRoll, boolean win) {
+
         this.firstRoll = firstRoll;
         this.secondRoll = secondRoll;
 
         this.win = win;
     }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getFirstRoll() {
         return firstRoll;
@@ -67,7 +61,6 @@ public class Roll {
     @Override
     public String toString() {
         return "Roll{" +
-                "id=" + id +
                 ", firstRoll=" + firstRoll +
                 ", secondRoll=" + secondRoll +
                 '}';
